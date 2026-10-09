@@ -17,7 +17,6 @@
       --card-border: rgba(220, 210, 195, 0.55);
       --text-color: #2b2520;
       --text-muted: #5e544c;
-      --accent: #d97736;
       --button-bg: #2b2520;
       --button-text: #faf7f2;
       --button-hover: #443c34;
@@ -26,15 +25,34 @@
       --theme-btn-border: rgba(0, 0, 0, 0.08);
       --toast-bg: #2b2520;
       --toast-text: #ffffff;
+
+      /* Soothing Light SVG Palette */
+      --aura-stop-1: #ffe6aa;
+      --aura-stop-2: #ffd1b3;
+      --aura-stop-3: #d8c2e6;
+      --aura-stop-4: #bddcf0;
+      --ring1-start: #f497a7;
+      --ring1-mid: #f6b5cc;
+      --ring1-end: #9ac2f8;
+      --ring2-start: #8ae3e8;
+      --ring2-mid: #a6cff8;
+      --ring2-end: #e5c3e6;
+      --title-start: #c85324;
+      --title-mid: #b8436b;
+      --title-end: #7b3992;
+      --node-1: #f8c976;
+      --node-2: #7ed8bd;
+      --node-3: #f59ebc;
+      --node-4: #8ecdf5;
+      --aura-opacity: 0.75;
     }
 
     [data-theme="dark"] {
       --bg-color: #121316;
-      --card-bg: rgba(26, 28, 34, 0.85);
+      --card-bg: rgba(24, 26, 32, 0.88);
       --card-border: rgba(255, 255, 255, 0.08);
       --text-color: #ede8e1;
       --text-muted: #b0a99f;
-      --accent: #f59e0b;
       --button-bg: #ede8e1;
       --button-text: #121316;
       --button-hover: #ffffff;
@@ -43,6 +61,26 @@
       --theme-btn-border: rgba(255, 255, 255, 0.12);
       --toast-bg: #ffffff;
       --toast-text: #121316;
+
+      /* Elegant, Soothing Dark SVG Palette (Cosmic Muted Glow) */
+      --aura-stop-1: #4a5d78;
+      --aura-stop-2: #38425d;
+      --aura-stop-3: #2a2c42;
+      --aura-stop-4: #181926;
+      --ring1-start: #7889a4;
+      --ring1-mid: #5d6d88;
+      --ring1-end: #637b99;
+      --ring2-start: #5a8a99;
+      --ring2-mid: #4a6880;
+      --ring2-end: #6d6282;
+      --title-start: #f1dfbf;
+      --title-mid: #d9c8b0;
+      --title-end: #b6cad6;
+      --node-1: #dfcfab;
+      --node-2: #82aeb3;
+      --node-3: #a49fc4;
+      --node-4: #88a7c2;
+      --aura-opacity: 0.55;
     }
 
     * {
@@ -131,6 +169,14 @@
       max-width: 320px;
       height: auto;
       overflow: visible;
+    }
+
+    /* SVG Theme Transition */
+    .aura-svg stop,
+    .aura-svg circle,
+    .aura-svg ellipse,
+    .aura-svg text {
+      transition: all 0.4s ease;
     }
 
     /* Body Text Styling */
@@ -232,11 +278,11 @@
     @keyframes pulseAura {
       0%, 100% {
         transform: scale(0.96);
-        opacity: 0.72;
+        opacity: calc(var(--aura-opacity) * 0.8);
       }
       50% {
-        transform: scale(1.08);
-        opacity: 0.95;
+        transform: scale(1.06);
+        opacity: var(--aura-opacity);
       }
     }
 
@@ -251,35 +297,35 @@
     }
 
     @keyframes floatParticle {
-      0%, 100% { transform: translateY(0px) scale(0.9); opacity: 0.5; }
-      50% { transform: translateY(-7px) scale(1.15); opacity: 0.95; }
+      0%, 100% { transform: translateY(0px) scale(0.9); opacity: 0.45; }
+      50% { transform: translateY(-7px) scale(1.1); opacity: 0.85; }
     }
 
     .aura-glow {
       transform-origin: center;
-      animation: pulseAura 5.5s ease-in-out infinite;
+      animation: pulseAura 6s ease-in-out infinite;
     }
 
     .ring-cw {
       transform-origin: center;
-      animation: rotateRingClockwise 22s linear infinite;
+      animation: rotateRingClockwise 24s linear infinite;
     }
 
     .ring-ccw {
       transform-origin: center;
-      animation: rotateRingCounter 28s linear infinite;
+      animation: rotateRingCounter 30s linear infinite;
     }
 
     .particle-1 {
-      animation: floatParticle 3.8s ease-in-out infinite;
+      animation: floatParticle 4s ease-in-out infinite;
     }
 
     .particle-2 {
-      animation: floatParticle 4.6s ease-in-out infinite 0.9s;
+      animation: floatParticle 4.8s ease-in-out infinite 0.9s;
     }
 
     .particle-3 {
-      animation: floatParticle 3.2s ease-in-out infinite 1.7s;
+      animation: floatParticle 3.5s ease-in-out infinite 1.7s;
     }
   </style>
 </head>
@@ -296,38 +342,41 @@
   <!-- Document Card -->
   <main class="article-container">
     
-    <!-- Animated SVG Title Graphic -->
+    <!-- Animated SVG Title Graphic with Adaptive Soothing Colors -->
     <header class="hero-graphic" aria-label="‘ऑरा’">
       <svg class="aura-svg" viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg">
         <defs>
-          <!-- Soft Colorful Gradients for Light & Vibrant Aura -->
+          <!-- Dynamic Soothing Radial Background Glow -->
           <radialGradient id="auraRadial" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#ffd56b" stop-opacity="0.85" />
-            <stop offset="35%" stop-color="#ff9a76" stop-opacity="0.6" />
-            <stop offset="70%" stop-color="#ba68c8" stop-opacity="0.35" />
-            <stop offset="100%" stop-color="#64b5f6" stop-opacity="0" />
+            <stop offset="0%" stop-color="var(--aura-stop-1)" stop-opacity="0.8" />
+            <stop offset="38%" stop-color="var(--aura-stop-2)" stop-opacity="0.5" />
+            <stop offset="72%" stop-color="var(--aura-stop-3)" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="var(--aura-stop-4)" stop-opacity="0" />
           </radialGradient>
 
+          <!-- Soothing Outer Orbital Ring Gradient -->
           <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#ff758c" stop-opacity="0.8" />
-            <stop offset="50%" stop-color="#ff7eb3" stop-opacity="0.3" />
-            <stop offset="100%" stop-color="#70a6ff" stop-opacity="0.75" />
+            <stop offset="0%" stop-color="var(--ring1-start)" stop-opacity="0.75" />
+            <stop offset="50%" stop-color="var(--ring1-mid)" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="var(--ring1-end)" stop-opacity="0.65" />
           </linearGradient>
 
+          <!-- Soothing Counter-Orbital Ring Gradient -->
           <linearGradient id="ringGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.65" />
-            <stop offset="60%" stop-color="#4facfe" stop-opacity="0.25" />
-            <stop offset="100%" stop-color="#fbc2eb" stop-opacity="0.7" />
+            <stop offset="0%" stop-color="var(--ring2-start)" stop-opacity="0.65" />
+            <stop offset="55%" stop-color="var(--ring2-mid)" stop-opacity="0.2" />
+            <stop offset="100%" stop-color="var(--ring2-end)" stop-opacity="0.65" />
           </linearGradient>
 
+          <!-- Title Text Gradient -->
           <linearGradient id="titleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="#e65100" />
-            <stop offset="50%" stop-color="#d81b60" />
-            <stop offset="100%" stop-color="#8e24aa" />
+            <stop offset="0%" stop-color="var(--title-start)" />
+            <stop offset="50%" stop-color="var(--title-mid)" />
+            <stop offset="100%" stop-color="var(--title-end)" />
           </linearGradient>
 
           <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feGaussianBlur stdDeviation="9" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
         </defs>
@@ -335,15 +384,15 @@
         <!-- Pulsing Aura Core -->
         <circle class="aura-glow" cx="170" cy="90" r="78" fill="url(#auraRadial)" filter="url(#softGlow)" />
 
-        <!-- Orbital Rings -->
-        <ellipse class="ring-cw" cx="170" cy="90" rx="98" ry="46" fill="none" stroke="url(#ringGrad1)" stroke-width="2.2" stroke-dasharray="14 10 32 8" />
-        <ellipse class="ring-ccw" cx="170" cy="90" rx="114" ry="54" fill="none" stroke="url(#ringGrad2)" stroke-width="1.8" stroke-dasharray="18 14 4 10" />
+        <!-- Delicate Orbital Rings -->
+        <ellipse class="ring-cw" cx="170" cy="90" rx="98" ry="46" fill="none" stroke="url(#ringGrad1)" stroke-width="1.8" stroke-dasharray="12 10 28 8" />
+        <ellipse class="ring-ccw" cx="170" cy="90" rx="114" ry="54" fill="none" stroke="url(#ringGrad2)" stroke-width="1.5" stroke-dasharray="16 12 4 10" />
 
-        <!-- Gentle Light Floating Nodes -->
-        <circle class="particle-1" cx="80" cy="65" r="4.5" fill="#ffd166" opacity="0.85" />
-        <circle class="particle-2" cx="260" cy="115" r="5" fill="#06d6a0" opacity="0.8" />
-        <circle class="particle-3" cx="250" cy="55" r="4" fill="#ff70a6" opacity="0.85" />
-        <circle class="particle-1" cx="95" cy="125" r="3.5" fill="#70d6ff" opacity="0.75" />
+        <!-- Gentle Floating Energy Points -->
+        <circle class="particle-1" cx="82" cy="66" r="4" fill="var(--node-1)" />
+        <circle class="particle-2" cx="258" cy="114" r="4" fill="var(--node-2)" />
+        <circle class="particle-3" cx="248" cy="56" r="3.5" fill="var(--node-3)" />
+        <circle class="particle-1" cx="96" cy="124" r="3.5" fill="var(--node-4)" />
 
         <!-- Title Text -->
         <text x="170" y="104" text-anchor="middle" font-family="'IBM Plex Sans Devanagari', 'IBM Plex Sans', sans-serif" font-size="44" font-weight="700" fill="url(#titleGradient)" letter-spacing="2">‘ऑरा’</text>
