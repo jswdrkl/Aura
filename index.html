@@ -1,373 +1,473 @@
 <!DOCTYPE html>
-<html lang="mr" class="light">
+<html lang="mr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>‘ऑरा’</title>
   
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            aura: ['"IBM Plex Sans Devanagari"', '"IBM Plex Sans"', 'sans-serif'],
-          },
-          colors: {
-            auraGlowLight: '#f3e8ff',
-            auraSurface: '#faf8f5',
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Google Fonts: IBM Plex Sans and IBM Plex Sans Devanagari -->
+  <!-- IBM Plex Sans & IBM Plex Sans Devanagari Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg-color: #faf7f2;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(220, 210, 195, 0.55);
+      --text-color: #2b2520;
+      --text-muted: #5e544c;
+      --accent: #d97736;
+      --button-bg: #2b2520;
+      --button-text: #faf7f2;
+      --button-hover: #443c34;
+      --shadow: 0 16px 40px -10px rgba(160, 120, 85, 0.15);
+      --theme-btn-bg: rgba(255, 255, 255, 0.9);
+      --theme-btn-border: rgba(0, 0, 0, 0.08);
+      --toast-bg: #2b2520;
+      --toast-text: #ffffff;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121316;
+      --card-bg: rgba(26, 28, 34, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-color: #ede8e1;
+      --text-muted: #b0a99f;
+      --accent: #f59e0b;
+      --button-bg: #ede8e1;
+      --button-text: #121316;
+      --button-hover: #ffffff;
+      --shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
+      --theme-btn-bg: rgba(26, 28, 34, 0.9);
+      --theme-btn-border: rgba(255, 255, 255, 0.12);
+      --toast-bg: #ffffff;
+      --toast-text: #121316;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: 'IBM Plex Sans Devanagari', 'IBM Plex Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: "IBM Plex Sans Devanagari", "IBM Plex Sans", sans-serif;
+      line-height: 1.95;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2.5rem 1.25rem 4rem;
+      transition: background-color 0.35s ease, color 0.35s ease;
       word-break: keep-all;
       overflow-wrap: break-word;
       hyphens: none;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Justified text formatting rule */
-    .article-text {
+    .theme-toggle-container {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 1rem;
+    }
+
+    .theme-toggle-btn {
+      background: var(--theme-btn-bg);
+      border: 1px solid var(--theme-btn-border);
+      color: var(--text-color);
+      cursor: pointer;
+      padding: 0.55rem 0.95rem;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-family: inherit;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.25s ease;
+    }
+
+    .theme-toggle-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .article-container {
+      width: 100%;
+      max-width: 760px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 3rem 2.8rem;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1.5rem 0.9rem 3rem;
+      }
+      .article-container {
+        padding: 2rem 1.35rem;
+        border-radius: 18px;
+      }
+    }
+
+    /* Animated Aura Graphic */
+    .hero-graphic {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2.2rem;
+    }
+
+    .aura-svg {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      overflow: visible;
+    }
+
+    /* Slightly increased body text font */
+    .article-body {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: var(--text-color);
+    }
+
+    @media (max-width: 640px) {
+      .article-body {
+        font-size: 1.15rem;
+        line-height: 1.85;
+      }
+    }
+
+    .article-body p {
       text-align: justify;
       text-justify: inter-word;
-      line-height: 2.1;
-      word-break: keep-all;
-      overflow-wrap: break-word;
-      hyphens: none;
+      margin-bottom: 1.5rem;
     }
 
-    /* Animated luminous aura ring effects */
+    .divider-symbol {
+      text-align: center !important;
+      font-size: 1.25rem;
+      letter-spacing: 0.45rem;
+      margin: 2.1rem 0 1.9rem !important;
+      user-select: none;
+    }
+
+    .date-stamp {
+      text-align: center !important;
+      font-weight: 500;
+      letter-spacing: 0.12rem;
+      margin-top: 2rem !important;
+      margin-bottom: 0 !important;
+      font-size: 1.18rem;
+      color: var(--text-muted);
+    }
+
+    /* Share Section */
+    .share-wrapper {
+      margin-top: 3rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .share-btn {
+      background-color: var(--button-bg);
+      color: var(--button-text);
+      border: none;
+      border-radius: 9999px;
+      padding: 0.85rem 2rem;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+      transition: all 0.25s ease;
+    }
+
+    .share-btn:hover {
+      background-color: var(--button-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+    }
+
+    .share-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Feedback Toast */
+    .toast {
+      position: fixed;
+      bottom: 1.8rem;
+      background: var(--toast-bg);
+      color: var(--toast-text);
+      padding: 0.65rem 1.4rem;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 999;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Animations for SVG */
     @keyframes pulseAura {
       0%, 100% {
-        transform: scale(1) rotate(0deg);
-        opacity: 0.85;
+        transform: scale(0.96);
+        opacity: 0.72;
       }
       50% {
-        transform: scale(1.08) rotate(180deg);
-        opacity: 1;
-      }
-    }
-
-    @keyframes counterAura {
-      0%, 100% {
-        transform: scale(1.05) rotate(360deg);
-        opacity: 0.75;
-      }
-      50% {
-        transform: scale(0.95) rotate(180deg);
+        transform: scale(1.08);
         opacity: 0.95;
       }
     }
 
+    @keyframes rotateRingClockwise {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes rotateRingCounter {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
     @keyframes floatParticle {
-      0%, 100% { transform: translateY(0px) scale(1); }
-      50% { transform: translateY(-8px) scale(1.15); }
+      0%, 100% { transform: translateY(0px) scale(0.9); opacity: 0.5; }
+      50% { transform: translateY(-7px) scale(1.15); opacity: 0.95; }
     }
 
-    .aura-ring-1 {
-      animation: pulseAura 12s ease-in-out infinite;
+    .aura-glow {
       transform-origin: center;
+      animation: pulseAura 5.5s ease-in-out infinite;
     }
 
-    .aura-ring-2 {
-      animation: counterAura 16s ease-in-out infinite;
+    .ring-cw {
       transform-origin: center;
+      animation: rotateRingClockwise 22s linear infinite;
     }
 
-    .aura-dot {
-      animation: floatParticle 4s ease-in-out infinite;
+    .ring-ccw {
       transform-origin: center;
+      animation: rotateRingCounter 28s linear infinite;
     }
 
-    /* Ambient background glow */
-    .ambient-glow {
-      background: radial-gradient(circle at 50% 20%, rgba(216, 180, 254, 0.35), rgba(254, 215, 170, 0.25), rgba(186, 230, 253, 0.15), transparent 70%);
-    }
-    .dark .ambient-glow {
-      background: radial-gradient(circle at 50% 20%, rgba(147, 51, 234, 0.18), rgba(217, 119, 6, 0.12), rgba(14, 165, 233, 0.1), transparent 75%);
+    .particle-1 {
+      animation: floatParticle 3.8s ease-in-out infinite;
     }
 
-    /* Selection colors */
-    ::selection {
-      background-color: #fbcfe8;
-      color: #3730a3;
+    .particle-2 {
+      animation: floatParticle 4.6s ease-in-out infinite 0.9s;
     }
-    .dark ::selection {
-      background-color: #6366f1;
-      color: #ffffff;
+
+    .particle-3 {
+      animation: floatParticle 3.2s ease-in-out infinite 1.7s;
     }
   </style>
 </head>
-<body class="min-h-screen bg-[#faf7f2] dark:bg-[#121318] text-[#292524] dark:text-[#e7e5e4] transition-colors duration-500 relative flex flex-col justify-between selection:bg-purple-200">
+<body>
 
-  <div class="fixed inset-0 pointer-events-none ambient-glow z-0"></div>
-
-  <!-- Theme Toggle Floating Action -->
-  <aside class="fixed top-5 right-5 z-50">
-    <button 
-      id="themeToggleBtn"
-      aria-label="Toggle Theme" 
-      class="w-11 h-11 rounded-full bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md shadow-md border border-stone-200 dark:border-zinc-700 flex items-center justify-center text-stone-700 dark:text-stone-200 hover:scale-105 active:scale-95 transition-all duration-300">
-      <!-- Sun Icon (shown in dark mode) -->
-      <svg id="sunIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="5"></circle>
-        <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
-      </svg>
-      <!-- Moon Icon (shown in light mode) -->
-      <svg id="moonIcon" class="w-5 h-5 block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
-      </svg>
+  <!-- Theme Toggle -->
+  <aside class="theme-toggle-container" aria-label="थीम पर्याय">
+    <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="थीम बदला">
+      <span id="themeIcon">🌙</span>
+      <span id="themeLabel">Dark</span>
     </button>
   </aside>
 
-  <main class="relative z-10 w-full max-w-3xl mx-auto px-5 sm:px-8 md:px-12 pt-12 pb-16 flex-grow">
+  <!-- Document Card -->
+  <main class="article-container">
     
-    <!-- Title with Animated Aura Graphic -->
-    <header class="flex flex-col items-center justify-center mb-10 text-center select-none">
-      <div class="relative w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center">
-        <!-- SVG Graphic depicting Aura with radiant harmonious energy layers -->
-        <svg class="w-full h-full" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <!-- Aura Gradient Rings -->
-            <radialGradient id="auraCore" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#fdba74" stop-opacity="0.8" />
-              <stop offset="45%" stop-color="#f472b6" stop-opacity="0.55" />
-              <stop offset="85%" stop-color="#a78bfa" stop-opacity="0.25" />
-              <stop offset="100%" stop-color="#60a5fa" stop-opacity="0" />
-            </radialGradient>
+    <!-- Animated SVG Title Graphic -->
+    <header class="hero-graphic" aria-label="‘ऑरा’">
+      <svg class="aura-svg" viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Soft Colorful Gradients for Light & Vibrant Aura -->
+          <radialGradient id="auraRadial" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffd56b" stop-opacity="0.85" />
+            <stop offset="35%" stop-color="#ff9a76" stop-opacity="0.6" />
+            <stop offset="70%" stop-color="#ba68c8" stop-opacity="0.35" />
+            <stop offset="100%" stop-color="#64b5f6" stop-opacity="0" />
+          </radialGradient>
 
-            <linearGradient id="auraRingGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.7" />
-              <stop offset="35%" stop-color="#c084fc" stop-opacity="0.75" />
-              <stop offset="70%" stop-color="#f472b6" stop-opacity="0.7" />
-              <stop offset="100%" stop-color="#fbbf24" stop-opacity="0.65" />
-            </linearGradient>
+          <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff758c" stop-opacity="0.8" />
+            <stop offset="50%" stop-color="#ff7eb3" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#70a6ff" stop-opacity="0.75" />
+          </linearGradient>
 
-            <linearGradient id="auraRingGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stop-color="#34d399" stop-opacity="0.6" />
-              <stop offset="40%" stop-color="#38bdf8" stop-opacity="0.65" />
-              <stop offset="80%" stop-color="#e879f9" stop-opacity="0.7" />
-              <stop offset="100%" stop-color="#f87171" stop-opacity="0.6" />
-            </linearGradient>
+          <linearGradient id="ringGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#00f2fe" stop-opacity="0.65" />
+            <stop offset="60%" stop-color="#4facfe" stop-opacity="0.25" />
+            <stop offset="100%" stop-color="#fbc2eb" stop-opacity="0.7" />
+          </linearGradient>
 
-            <filter id="softGlow" x="-25%" y="-25%" width="150%" height="150%">
-              <feGaussianBlur stdDeviation="8" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
+          <linearGradient id="titleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#e65100" />
+            <stop offset="50%" stop-color="#d81b60" />
+            <stop offset="100%" stop-color="#8e24aa" />
+          </linearGradient>
 
-          <!-- Outer Radiant Halo -->
-          <circle cx="120" cy="120" r="88" fill="url(#auraCore)" filter="url(#softGlow)" />
+          <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="8" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
 
-          <!-- Dynamic Energy Ellipses -->
-          <g class="aura-ring-1" filter="url(#softGlow)">
-            <ellipse cx="120" cy="120" rx="94" ry="76" stroke="url(#auraRingGrad1)" stroke-width="2.2" stroke-dasharray="6 8" opacity="0.85" />
-          </g>
+        <!-- Pulsing Aura Core -->
+        <circle class="aura-glow" cx="170" cy="90" r="78" fill="url(#auraRadial)" filter="url(#softGlow)" />
 
-          <g class="aura-ring-2" filter="url(#softGlow)">
-            <ellipse cx="120" cy="120" rx="78" ry="92" stroke="url(#auraRingGrad2)" stroke-width="2" stroke-dasharray="14 10" opacity="0.8" />
-          </g>
+        <!-- Orbital Rings -->
+        <ellipse class="ring-cw" cx="170" cy="90" rx="98" ry="46" fill="none" stroke="url(#ringGrad1)" stroke-width="2.2" stroke-dasharray="14 10 32 8" />
+        <ellipse class="ring-ccw" cx="170" cy="90" rx="114" ry="54" fill="none" stroke="url(#ringGrad2)" stroke-width="1.8" stroke-dasharray="18 14 4 10" />
 
-          <!-- Middle luminous ring -->
-          <circle cx="120" cy="120" r="62" stroke="url(#auraRingGrad1)" stroke-width="1.8" opacity="0.7" />
+        <!-- Gentle Light Floating Nodes -->
+        <circle class="particle-1" cx="80" cy="65" r="4.5" fill="#ffd166" opacity="0.85" />
+        <circle class="particle-2" cx="260" cy="115" r="5" fill="#06d6a0" opacity="0.8" />
+        <circle class="particle-3" cx="250" cy="55" r="4" fill="#ff70a6" opacity="0.85" />
+        <circle class="particle-1" cx="95" cy="125" r="3.5" fill="#70d6ff" opacity="0.75" />
 
-          <!-- Radiant floating energy specks -->
-          <circle cx="70" cy="68" r="2.5" fill="#f472b6" class="aura-dot" opacity="0.85" />
-          <circle cx="170" cy="62" r="3" fill="#38bdf8" class="aura-dot" style="animation-delay: 1.2s;" opacity="0.85" />
-          <circle cx="178" cy="172" r="2.5" fill="#fbbf24" class="aura-dot" style="animation-delay: 2.1s;" opacity="0.85" />
-          <circle cx="64" cy="168" r="3" fill="#34d399" class="aura-dot" style="animation-delay: 3s;" opacity="0.85" />
-
-          <!-- Center glowing nucleus -->
-          <circle cx="120" cy="120" r="38" fill="#ffffff" class="dark:fill-[#1e1b4b]" opacity="0.35" filter="url(#softGlow)" />
-        </svg>
-
-        <!-- Document Title Overlay directly over animated graphic -->
-        <h1 class="absolute text-4xl sm:text-5xl font-semibold tracking-wide text-stone-900 dark:text-stone-50 drop-shadow-sm select-none">
-          ‘ऑरा’
-        </h1>
-      </div>
+        <!-- Title Text -->
+        <text x="170" y="104" text-anchor="middle" font-family="'IBM Plex Sans Devanagari', 'IBM Plex Sans', sans-serif" font-size="44" font-weight="700" fill="url(#titleGradient)" letter-spacing="2">‘ऑरा’</text>
+      </svg>
     </header>
 
-    <article class="space-y-6 text-base sm:text-lg md:text-[19px] text-stone-800 dark:text-stone-200">
-      
-      <!-- Section 1 -->
-      <p class="article-text">
-        ‘ऑरा’ (Aura) हा शब्द बहुतांश वेळा आध्यात्मिक विषयांची चर्चा करताना वापरला जातो. कोणत्याही सजीव गोष्टीच्या सभोवताली त्यातून उत्सर्जित होत असलेल्या उर्जेचा एक थर असतो अशी ही संकल्पना आहे.
-      </p>
+    <!-- Document Content -->
+    <article class="article-body">
+      <p>‘ऑरा’ (Aura) हा शब्द बहुतांश वेळा आध्यात्मिक विषयांची चर्चा करताना वापरला जातो. कोणत्याही सजीव गोष्टीच्या सभोवताली त्यातून उत्सर्जित होत असलेल्या उर्जेचा एक थर असतो अशी ही संकल्पना आहे.[cite: 1]</p>
 
-      <p class="article-text">
-        ‘ऑरा’ खरंच असतो का? दिसतो का? असेल तर सगळ्यांना का दिसत, जाणवत नाही या प्रश्नांच्या मागे न जाता आपल्या प्रत्येकाच्या अंगभूत ऊर्जेचे सभोवताली असलेले प्रभावक्षेत्र म्हणजे ‘ऑरा’ असा अर्थ घेऊया.
-      </p>
+      <p>‘ऑरा’ खरंच असतो का? दिसतो का? असेल तर सगळ्यांना का दिसत, जाणवत नाही या प्रश्नांच्या मागे न जाता आपल्या प्रत्येकाच्या अंगभूत ऊर्जेचे सभोवताली असलेले प्रभावक्षेत्र म्हणजे ‘ऑरा’ असा अर्थ घेऊया.[cite: 1]</p>
 
-      <p class="article-text">
-        असा हा ‘ऑरा’ दिसत नसला तरी असतो, जाणवतो हे मात्र मान्य करायला हवे. माणसामाणसांत होणाऱ्या, माणसांच्या प्राण्यांबरोबर, अगदी निर्जीव वस्तूंसोबत होणाऱ्या ‘परस्परसंवादा’मधे त्यातील ऊर्जा जाणवते हे नक्की.
-      </p>
+      <p>असा हा ‘ऑरा’ दिसत नसला तरी असतो, जाणवतो हे मात्र मान्य करायला हवे. माणसामाणसांत होणाऱ्या, माणसांच्या प्राण्यांबरोबर, अगदी निर्जीव वस्तूंसोबत होणाऱ्या ‘परस्परसंवादा’मधे त्यातील ऊर्जा जाणवते हे नक्की.[cite: 1]</p>
 
-      <p class="article-text">
-        मतभेद असले, तावातावाने चर्चा होत असली तर परिस्थिती तप्त आहे; वात्सल्य, जिव्हाळा, प्रेम असेल तर उबदार किंवा गारेगार आहे आणि यातील दोन्हीच्या मधील स्थिती असेल तर प्रकरण नरम-गरम आहे असे म्हणले जाते. हातून एखादे काम सहज होते व भारी वाटते किंवा कधीकधी एखाद्या कामात अडचणी येतात आणि चिडचिड होते; हे सर्व दुसरे तिसरे काहीही नसते, ते ‘ऑरा’चे, जाणवणाऱ्या ऊर्जेचे केले जाणारे यथार्थ वर्णन असते.
-      </p>
+      <p>मतभेद असले, तावातावाने चर्चा होत असली तर परिस्थिती तप्त आहे; वात्सल्य, जिव्हाळा, प्रेम असेल तर उबदार किंवा गारेगार आहे आणि यातील दोन्हीच्या मधील स्थिती असेल तर प्रकरण नरम-गरम आहे असे म्हणले जाते. हातून एखादे काम सहज होते व भारी वाटते किंवा कधीकधी एखाद्या कामात अडचणी येतात आणि चिडचिड होते; हे सर्व दुसरे तिसरे काहीही नसते, ते ‘ऑरा’चे, जाणवणाऱ्या ऊर्जेचे केले जाणारे यथार्थ वर्णन असते.[cite: 1]</p>
 
-      <p class="article-text">
-        ज्ञानी, अनुभवसमृद्ध व्यक्तीच्या वागण्या-बोलण्यात एक प्रकारचा आश्वासकपणा, शांतता व आत्मविश्वासाचा ‘ऑरा’ असतो हे जाणवते. तो प्रयत्नपूर्वक बघावा-दाखवावा लागत नाही, त्याची अनुभूती येते.
-      </p>
+      <p>ज्ञानी, अनुभवसमृद्ध व्यक्तीच्या वागण्या-बोलण्यात एक प्रकारचा आश्वासकपणा, शांतता व आत्मविश्वासाचा ‘ऑरा’ असतो हे जाणवते. तो प्रयत्नपूर्वक बघावा-दाखवावा लागत नाही, त्याची अनुभूती येते.[cite: 1]</p>
 
-      <!-- Centered Divider 1 -->
-      <div class="py-5 text-center text-xl sm:text-2xl tracking-widest select-none">
-        🌠🌠🌠
-      </div>
+      <p class="divider-symbol">🌠🌠🌠</p>
 
-      <!-- Section 2 -->
-      <p class="article-text">
-        प्रत्येक 'मी'चा एक 'ऑरा' म्हणजे त्याची एक अंगभूत ऊर्जा असते. ती मूलतः शांत, थंड असते. त्यात बदल होतात ते विचारांमुळे. आता मन म्हणले की विचार येणार, यायलाच हवेत. प्रगती होण्यासाठी, ज्ञानात भर पडण्यासाठी, ते ताजेतवाने राहण्यासाठी, अनुभवसमृद्ध होण्यासाठी विचार हवेतच. फक्त त्याचा अतिरेक नको.
-      </p>
+      <p>प्रत्येक 'मी'चा एक 'ऑरा' म्हणजे त्याची एक अंगभूत ऊर्जा असते. ती मूलतः शांत, थंड असते. त्यात बदल होतात ते विचारांमुळे. आता मन म्हणले की विचार येणार, यायलाच हवेत. प्रगती होण्यासाठी, ज्ञानात भर पडण्यासाठी, ते ताजेतवाने राहण्यासाठी, अनुभवसमृद्ध होण्यासाठी विचार हवेतच. फक्त त्याचा अतिरेक नको.[cite: 1]</p>
 
-      <p class="article-text">
-        काही वेळा मीच, मलाच, माझेच, माझ्यामुळेच यासारखे विचार ‘मी’ भोवती जास्तच रुंजी घालू लागतात. असे होऊ लागले की वाढीस लागतो तो अहंकार. त्याचे जाणवणे ही ‘ऑरा’ला आलेली एक प्रकारची सूज असते.
-      </p>
+      <p>काही वेळा मीच, मलाच, माझेच, माझ्यामुळेच यासारखे विचार ‘मी’ भोवती जास्तच रुंजी घालू लागतात. असे होऊ लागले की वाढीस लागतो तो अहंकार. त्याचे जाणवणे ही ‘ऑरा’ला आलेली एक प्रकारची सूज असते.[cite: 1]</p>
 
-      <p class="article-text">
-        याच्या उलट मला काही येत नाही, जमतच नाही यासारखे नकारात्मक विचार मनात असले तर तो ‘न्यूनगंड’ असतो. हा ‘निगेटीव्ह इगो’ शिल्लक असेल-नसेल तो ‘ऑरा’ खातो आणि त्याची जागा ‘स्ट्रेस’ने व्यापली जाते. काहीच ‘फ्रूटफूल’ करता येईनासे होते.
-      </p>
+      <p>याच्या उलट मला काही येत नाही, जमतच नाही यासारखे नकारात्मक विचार मनात असले तर तो ‘न्यूनगंड’ असतो. हा ‘निगेटीव्ह इगो’ शिल्लक असेल-नसेल तो ‘ऑरा’ खातो आणि त्याची जागा ‘स्ट्रेस’ने व्यापली जाते. काहीच ‘फ्रूटफूल’ करता येईनासे होते.[cite: 1]</p>
 
-      <p class="article-text">
-        वरच्या दोनही दंभपूर्ण ‘ऑरा’ला एक प्रकारचा चटका असतो, त्याचा त्यातील ‘मी’ ला कदाचित तात्कालिक फायदा होत असतो पण तो टिकवण्यासाठी त्या ‘मी’ ला नकळत खूप कष्ट पडत असतात, त्यात खूप ऊर्जा वाया जात असते.
-      </p>
+      <p>वरच्या दोनही दंभपूर्ण ‘ऑरा’ला एक प्रकारचा चटका असतो, त्याचा त्यातील ‘मी’ ला कदाचित तात्कालिक फायदा होत असतो पण तो टिकवण्यासाठी त्या ‘मी’ ला नकळत खूप कष्ट पडत असतात, त्यात खूप ऊर्जा वाया जात असते.[cite: 1]</p>
 
-      <p class="article-text">
-        पण डोक्यात जेव्हां असंख्य विचारांचे थैमान असते तेव्हां त्यात असलेली निरर्थक आणि अस्थानी विचारांची बहुसंख्या ‘ऑरा’ तापवते आणि मग त्याचे उकळणे राग, संताप, उन्माद आणि अतिरेक यासारख्या क्रियांद्वारे बाहेर येते. आजूबाजूच्या व्यक्ती, वस्तूंना तर ते जाणवतेच पण ज्यातून ही ऊर्जा बाहेर पडत असते त्यालाही अक्षरशः जाळते.
-      </p>
+      <p>पण डोक्यात जेव्हां असंख्य विचारांचे थैमान असते तेव्हां त्यात असलेली निरर्थक आणि अस्थानी विचारांची बहुसंख्या ‘ऑरा’ तापवते आणि मग त्याचे उकळणे राग, संताप, उन्माद आणि अतिरेक यासारख्या क्रियांद्वारे बाहेर येते. आजूबाजूच्या व्यक्ती, वस्तूंना तर ते जाणवतेच पण ज्यातून ही ऊर्जा बाहेर पडत असते त्यालाही अक्षरशः जाळते.[cite: 1]</p>
 
-      <!-- Centered Divider 2 -->
-      <div class="py-5 text-center text-xl sm:text-2xl tracking-widest select-none">
-        🌠🌠🌠
-      </div>
+      <p class="divider-symbol">🌠🌠🌠</p>
 
-      <!-- Section 3 -->
-      <p class="article-text">
-        चांगल्या सवयी आणि मनाचिये ठायी असलेला कृतज्ञतेचा भाव मनी उद्भवणारे निरर्थक विचार कमी कमी करत निर्विचार होण्याच्या मार्ग प्रशस्त करतो. हा प्रवास ‘ऑरा’ची पातळी योग्य तितकी राखायला मदत करतो. मन स्थिर राहू लागते. पाय जमिनीवर असण्याची अर्थात वर्तमानात राहण्याची जडणारी सवय क्वचित प्रसंगी जास्त होणाऱ्या ‘ऑरा’ला ग्राउंड करून शॉर्ट सर्किट होऊ देत नाही.
-      </p>
+      <p>चांगल्या सवयी आणि मनाचिये ठायी असलेला कृतज्ञतेचा भाव मनी उद्भवणारे निरर्थक विचार कमी कमी करत निर्विचार होण्याच्या मार्ग प्रशस्त करतो. हा प्रवास ‘ऑरा’ची पातळी योग्य तितकी राखायला मदत करतो. मन स्थिर राहू लागते. पाय जमिनीवर असण्याची अर्थात वर्तमानात राहण्याची जडणारी सवय क्वचित प्रसंगी जास्त होणाऱ्या ‘ऑरा’ला ग्राउंड करून शॉर्ट सर्किट होऊ देत नाही.[cite: 1]</p>
 
-      <!-- Ending reference date in document -->
-      <div class="pt-6 text-center text-base sm:text-lg text-stone-600 dark:text-stone-400 font-medium tracking-wide">
-        🌠 २०२५०८०४ 🌠
-      </div>
-
+      <p class="date-stamp">२०२५०८०४🌠</p>
     </article>
 
-    <div class="mt-14 mb-4 flex flex-col items-center justify-center">
-      <button 
-        id="shareBtn"
-        type="button"
-        class="group relative inline-flex items-center gap-3 px-7 py-3 rounded-full bg-gradient-to-r from-purple-600 via-indigo-600 to-amber-600 text-white font-medium text-base shadow-lg shadow-purple-500/20 hover:shadow-purple-500/35 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300">
-        
-        <svg class="w-5 h-5 transition-transform group-hover:rotate-12 duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+    <!-- Share Button -->
+    <footer class="share-wrapper">
+      <button class="share-btn" id="shareBtn" type="button">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
         </svg>
-        
-        <span>शेअर करा</span>
+        <span>Share</span>
       </button>
-
-      <!-- Toast Feedback Message -->
-      <div 
-        id="toastMessage" 
-        class="opacity-0 pointer-events-none mt-4 px-4 py-2 text-sm rounded-lg bg-stone-900 text-stone-100 dark:bg-stone-100 dark:text-stone-900 shadow-md transition-opacity duration-300">
-        लिंक कॉपी झाली!
-      </div>
-    </div>
+    </footer>
 
   </main>
 
+  <!-- Notification Toast -->
+  <aside class="toast" id="toastNotification" role="status" aria-live="polite">Link Copied</aside>
+
   <script>
-    // Theme toggle logic
-    const htmlElem = document.documentElement;
-    const themeToggleBtn = document.getElementById('themeToggleBtn');
-    const sunIcon = document.getElementById('sunIcon');
-    const moonIcon = document.getElementById('moonIcon');
+    // Theme Switcher
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+    const root = document.documentElement;
 
-    // Detect system preference or saved preference
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    let isDark = localStorage.getItem('aura_theme') === 'dark' || (localStorage.getItem('aura_theme') === null && prefersDark);
-
-    function applyTheme(dark) {
-      if (dark) {
-        htmlElem.classList.add('dark');
-        htmlElem.classList.remove('light');
-        sunIcon.classList.remove('hidden');
-        moonIcon.classList.add('hidden');
+    function applyTheme(isDark) {
+      if (isDark) {
+        root.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+        themeLabel.textContent = 'Light';
       } else {
-        htmlElem.classList.remove('dark');
-        htmlElem.classList.add('light');
-        sunIcon.classList.add('hidden');
-        moonIcon.classList.remove('hidden');
+        root.removeAttribute('data-theme');
+        themeIcon.textContent = '🌙';
+        themeLabel.textContent = 'Dark';
       }
-      localStorage.setItem('aura_theme', dark ? 'dark' : 'light');
     }
 
-    // Initialize theme based on preference
-    applyTheme(isDark);
+    // Default to system preference if dark, otherwise light
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    let currentDark = prefersDark;
+    applyTheme(currentDark);
 
-    themeToggleBtn.addEventListener('click', () => {
-      isDark = !isDark;
-      applyTheme(isDark);
+    themeBtn.addEventListener('click', () => {
+      currentDark = !currentDark;
+      applyTheme(currentDark);
     });
 
-    // Share button logic
+    // Share Trigger with Web Share API and Clipboard Fallback
     const shareBtn = document.getElementById('shareBtn');
-    const toastMessage = document.getElementById('toastMessage');
-    let toastTimeout;
+    const toast = document.getElementById('toastNotification');
 
-    function showToast(text) {
-      toastMessage.textContent = text;
-      toastMessage.classList.remove('opacity-0', 'pointer-events-none');
-      clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => {
-        toastMessage.classList.add('opacity-0', 'pointer-events-none');
-      }, 2500);
+    function showToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2600);
     }
 
     shareBtn.addEventListener('click', async () => {
       const shareData = {
         title: '‘ऑरा’',
-        text: '‘ऑरा’ - मानवी ऊर्जा आणि विचारांचे प्रभावक्षेत्र यावरील एक चिंतनशील लेख.',
+        text: '‘ऑरा’ (Aura) - आपल्या प्रत्येकाच्या अंगभूत ऊर्जेचे सभोवताली असलेले प्रभावक्षेत्र',
         url: window.location.href
       };
 
       if (navigator.share) {
         try {
           await navigator.share(shareData);
-          return;
         } catch (err) {
-          // If aborted by user, do nothing; if unsupported, fallback below
-          if (err.name === 'AbortError') return;
+          if (err.name !== 'AbortError') {
+            fallbackCopy();
+          }
         }
-      }
-
-      // Clipboard fallback
-      try {
-        const tempInput = document.createElement('input');
-        tempInput.value = window.location.href;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand('copy');
-        document.body.removeChild(tempInput);
-        showToast('वेबपेज लिंक कॉपी झाली!');
-      } catch (err) {
-        showToast('कृपया URL कॉपी करा');
+      } else {
+        fallbackCopy();
       }
     });
+
+    function fallbackCopy() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showToast('Link copied to clipboard!');
+      }).catch(() => {
+        showToast('Share failed. Please copy the URL.');
+      });
+    }
   </script>
 </body>
 </html>
