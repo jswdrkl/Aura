@@ -1,592 +1,216 @@
 <!DOCTYPE html>
 <html lang="mr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light dark">
-  <meta name="supported-color-schemes" content="light dark">
-  <title>‘ऑरा’</title>
-  
-  <!-- IBM Plex Sans & IBM Plex Sans Devanagari Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari:wght@400;500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>‘ऑरा’</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Devanagari&family=Ubuntu&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fdfdfc;
+            --text-color: #2c2c2c;
+            --button-bg: #e0e0e0;
+            --button-text: #2c2c2c;
+            --svg-accent-1: #ffb6c1;
+            --svg-accent-2: #87cefa;
+            --svg-accent-3: #ffe4e1;
+        }
 
-  <style>
-    :root {
-      color-scheme: light;
-      --bg-color: #faf7f2;
-      --card-bg: #ffffff;
-      --card-border: #e0d7cb;
-      --text-color: #2b2520;
-      --text-muted: #5e544c;
-      --btn-bg: #2b2520;
-      --btn-text: #faf7f2;
-      --btn-hover: #443c34;
-      --btn-border: #2b2520;
-      --shadow: 0 16px 40px -10px rgba(160, 120, 85, 0.15);
-      --theme-btn-bg: #ffffff;
-      --theme-btn-border: #d0c8be;
-      --toast-bg: #2b2520;
-      --toast-text: #ffffff;
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #1a1a1a;
+                --text-color: #e0e0e0;
+                --button-bg: #333333;
+                --button-text: #e0e0e0;
+                --svg-accent-1: #b04961;
+                --svg-accent-2: #3f7b9f;
+                --svg-accent-3: #ad7e85;
+            }
+        }
 
-      /* Soothing Light SVG Palette */
-      --aura-stop-1: #ffe6aa;
-      --aura-stop-2: #ffd1b3;
-      --aura-stop-3: #d8c2e6;
-      --aura-stop-4: #bddcf0;
-      --ring1-start: #f497a7;
-      --ring1-mid: #f6b5cc;
-      --ring1-end: #9ac2f8;
-      --ring2-start: #8ae3e8;
-      --ring2-mid: #a6cff8;
-      --ring2-end: #e5c3e6;
-      --title-start: #c85324;
-      --title-mid: #b8436b;
-      --title-end: #7b3992;
-      --node-1: #f8c976;
-      --node-2: #7ed8bd;
-      --node-3: #f59ebc;
-      --node-4: #8ecdf5;
-      --aura-opacity: 0.75;
-    }
+        * {
+            font-weight: normal !important;
+            word-break: normal;
+            hyphens: none;
+        }
 
-    [data-theme="dark"] {
-      color-scheme: dark;
-      --bg-color: #121316;
-      --card-bg: #191b22;
-      --card-border: #2d313d;
-      --text-color: #ede8e1;
-      --text-muted: #b0a99f;
-      --btn-bg: #f3efe8;
-      --btn-text: #121316;
-      --btn-hover: #ffffff;
-      --btn-border: #f3efe8;
-      --shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
-      --theme-btn-bg: #20242e;
-      --theme-btn-border: #353b49;
-      --toast-bg: #ffffff;
-      --toast-text: #121316;
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'IBM Plex Sans Devanagari', 'Ubuntu', sans-serif;
+            font-size: 1.175rem;
+            line-height: 1.9;
+            margin: 0;
+            padding: 5vw;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-      /* Soothing Dark SVG Palette */
-      --aura-stop-1: #4a5d78;
-      --aura-stop-2: #38425d;
-      --aura-stop-3: #2a2c42;
-      --aura-stop-4: #181926;
-      --ring1-start: #7889a4;
-      --ring1-mid: #5d6d88;
-      --ring1-end: #637b99;
-      --ring2-start: #5a8a99;
-      --ring2-mid: #4a6880;
-      --ring2-end: #6d6282;
-      --title-start: #f1dfbf;
-      --title-mid: #d9c8b0;
-      --title-end: #b6cad6;
-      --node-1: #dfcfab;
-      --node-2: #82aeb3;
-      --node-3: #a49fc4;
-      --node-4: #88a7c2;
-      --aura-opacity: 0.55;
-    }
+        @media (min-width: 768px) {
+            body {
+                font-size: 1.25rem;
+                padding: 3vw 15vw;
+            }
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: "IBM Plex Sans Devanagari", "IBM Plex Sans", sans-serif;
-      line-height: 1.95;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2.5rem 1.25rem 4rem;
-      transition: background-color 0.35s ease, color 0.35s ease;
-      word-break: keep-all;
-      overflow-wrap: break-word;
-      hyphens: none;
-      -webkit-font-smoothing: antialiased;
-    }
+        p {
+            margin-top: 0;
+            margin-bottom: 1.35rem;
+            text-align: justify;
+        }
 
-    .theme-toggle-container {
-      width: 100%;
-      max-width: 760px;
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 1rem;
-    }
+        .center-italic {
+            text-align: center;
+            font-style: italic;
+        }
 
-    .theme-toggle-btn {
-      -webkit-appearance: none;
-      appearance: none;
-      background: var(--theme-btn-bg);
-      border: 1px solid var(--theme-btn-border);
-      color: var(--text-color);
-      cursor: pointer;
-      padding: 0.55rem 1rem;
-      border-radius: 9999px;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.95rem;
-      font-family: inherit;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      transition: all 0.25s ease;
-    }
+        .title {
+            font-size: 1.5em;
+            margin-bottom: 1.35rem;
+        }
 
-    .article-container {
-      width: 100%;
-      max-width: 760px;
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 24px;
-      padding: 3rem 2.8rem;
-      box-shadow: var(--shadow);
-      transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-    }
+        .svg-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
 
-    @media (max-width: 640px) {
-      body {
-        padding: 1.5rem 0.9rem 3rem;
-      }
-      .article-container {
-        padding: 2rem 1.35rem;
-        border-radius: 18px;
-      }
-    }
+        svg {
+            width: 200px;
+            height: 200px;
+            animation: float 6s ease-in-out infinite;
+        }
 
-    /* Animated SVG Title Graphic */
-    .hero-graphic {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 2.2rem;
-    }
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-15px) scale(1.05); }
+            100% { transform: translateY(0px) scale(1); }
+        }
 
-    .aura-svg {
-      width: 100%;
-      max-width: 320px;
-      height: auto;
-      overflow: visible;
-    }
+        @keyframes pulse {
+            0% { opacity: 0.6; r: 35; }
+            50% { opacity: 1; r: 45; }
+            100% { opacity: 0.6; r: 35; }
+        }
 
-    .aura-svg stop,
-    .aura-svg circle,
-    .aura-svg ellipse,
-    .aura-svg text {
-      transition: all 0.4s ease;
-    }
+        .layer1 { animation: pulse 4s infinite alternate; }
+        .layer2 { animation: pulse 5s infinite alternate-reverse; }
+        .layer3 { animation: pulse 6s infinite alternate; }
 
-    /* Body Text Styling */
-    .article-body {
-      font-size: 1.25rem;
-      font-weight: 400;
-      color: var(--text-color);
-    }
+        .share-btn-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+        }
 
-    @media (max-width: 640px) {
-      .article-body {
-        font-size: 1.15rem;
-        line-height: 1.85;
-      }
-    }
+        .share-btn {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: 1px solid var(--text-color);
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: opacity 0.3s;
+        }
 
-    .article-body p {
-      text-align: justify;
-      text-justify: inter-word;
-      margin-bottom: 1.5rem;
-    }
+        .share-btn:hover {
+            opacity: 0.8;
+        }
 
-    .divider-symbol {
-      text-align: center !important;
-      font-size: 1.25rem;
-      letter-spacing: 0.45rem;
-      margin: 2.1rem 0 1.9rem !important;
-      user-select: none;
-    }
+        .date-footer {
+            margin-top: 2.7rem; 
+            font-size: 0.85rem;
+            text-align: center;
+            font-style: italic;
+        }
 
-    .date-stamp {
-      text-align: center !important;
-      font-weight: 500;
-      letter-spacing: 0.12rem;
-      margin-top: 2rem !important;
-      margin-bottom: 0 !important;
-      font-size: 1.18rem;
-      color: var(--text-muted);
-    }
-
-    /* -------------------------------------------------------------
-       SAMSUNG INTERNET BULLETPROOF SHARE BUTTON STYLES
-       ------------------------------------------------------------- */
-    .share-wrapper {
-      margin-top: 3.2rem;
-      width: 100%;
-      display: block;
-      text-align: center;
-    }
-
-    /* Block level styling to circumvent Samsung WebKit inline-flex height collapse */
-    .share-btn {
-      -webkit-appearance: none !important;
-      -moz-appearance: none !important;
-      appearance: none !important;
-      -webkit-tap-highlight-color: transparent !important;
-      box-sizing: border-box !important;
-      
-      display: inline-block !important;
-      min-width: 170px !important;
-      height: 52px !important;
-      padding: 0 1.8rem !important;
-      
-      background-color: var(--btn-bg) !important;
-      color: var(--btn-text) !important;
-      border: 2px solid var(--btn-border) !important;
-      border-radius: 9999px !important;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
-      
-      cursor: pointer;
-      text-decoration: none;
-      vertical-align: middle;
-      transition: background-color 0.25s, transform 0.2s, box-shadow 0.25s;
-    }
-
-    .share-btn:hover {
-      background-color: var(--btn-hover) !important;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    .share-btn:active {
-      transform: translateY(0);
-    }
-
-    /* Table-cell inner container keeps text and SVG perfectly aligned across all mobile engines */
-    .share-btn-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-      width: 100%;
-      gap: 10px;
-    }
-
-    .share-btn-icon {
-      display: inline-block !important;
-      width: 20px !important;
-      height: 20px !important;
-      min-width: 20px !important;
-      min-height: 20px !important;
-      stroke: var(--btn-text) !important;
-      color: var(--btn-text) !important;
-      fill: none !important;
-      stroke-width: 2.2 !important;
-      stroke-linecap: round !important;
-      stroke-linejoin: round !important;
-      vertical-align: middle !important;
-      flex-shrink: 0 !important;
-    }
-
-    .share-btn-label {
-      display: inline-block !important;
-      font-family: "IBM Plex Sans Devanagari", "IBM Plex Sans", sans-serif !important;
-      font-size: 1.1rem !important;
-      font-weight: 600 !important;
-      color: var(--btn-text) !important;
-      line-height: 1 !important;
-      vertical-align: middle !important;
-      letter-spacing: 0.02em;
-    }
-
-    /* Feedback Toast */
-    .toast {
-      position: fixed;
-      bottom: 1.8rem;
-      background: var(--toast-bg);
-      color: var(--toast-text);
-      padding: 0.65rem 1.4rem;
-      border-radius: 9999px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(12px);
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-      z-index: 999;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Animations for SVG */
-    @keyframes pulseAura {
-      0%, 100% {
-        transform: scale(0.96);
-        opacity: calc(var(--aura-opacity) * 0.8);
-      }
-      50% {
-        transform: scale(1.06);
-        opacity: var(--aura-opacity);
-      }
-    }
-
-    @keyframes rotateRingClockwise {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    @keyframes rotateRingCounter {
-      from { transform: rotate(360deg); }
-      to { transform: rotate(0deg); }
-    }
-
-    @keyframes floatParticle {
-      0%, 100% { transform: translateY(0px) scale(0.9); opacity: 0.45; }
-      50% { transform: translateY(-7px) scale(1.1); opacity: 0.85; }
-    }
-
-    .aura-glow {
-      transform-origin: center;
-      animation: pulseAura 6s ease-in-out infinite;
-    }
-
-    .ring-cw {
-      transform-origin: center;
-      animation: rotateRingClockwise 24s linear infinite;
-    }
-
-    .ring-ccw {
-      transform-origin: center;
-      animation: rotateRingCounter 30s linear infinite;
-    }
-
-    .particle-1 {
-      animation: floatParticle 4s ease-in-out infinite;
-    }
-
-    .particle-2 {
-      animation: floatParticle 4.8s ease-in-out infinite 0.9s;
-    }
-
-    .particle-3 {
-      animation: floatParticle 3.5s ease-in-out infinite 1.7s;
-    }
-  </style>
+    </style>
 </head>
 <body>
 
-  <!-- Theme Toggle -->
-  <aside class="theme-toggle-container" aria-label="थीम पर्याय">
-    <button class="theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="थीम बदला">
-      <span id="themeIcon">🌙</span>
-      <span id="themeLabel">Dark</span>
-    </button>
-  </aside>
+    <div class="container">
+        
+        <div class="svg-container">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <radialGradient id="auraGrad1" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="var(--svg-accent-1)" stop-opacity="0.8" />
+                        <stop offset="100%" stop-color="var(--svg-accent-1)" stop-opacity="0" />
+                    </radialGradient>
+                    <radialGradient id="auraGrad2" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="var(--svg-accent-2)" stop-opacity="0.6" />
+                        <stop offset="100%" stop-color="var(--svg-accent-2)" stop-opacity="0" />
+                    </radialGradient>
+                    <radialGradient id="auraGrad3" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="var(--svg-accent-3)" stop-opacity="0.9" />
+                        <stop offset="100%" stop-color="var(--svg-accent-3)" stop-opacity="0" />
+                    </radialGradient>
+                </defs>
+                <circle cx="50" cy="50" r="45" fill="url(#auraGrad2)" class="layer2" />
+                <circle cx="50" cy="50" r="35" fill="url(#auraGrad1)" class="layer1" />
+                <circle cx="50" cy="50" r="25" fill="url(#auraGrad3)" class="layer3" />
+            </svg>
+        </div>
 
-  <!-- Document Card -->
-  <main class="article-container">
-    
-    <!-- Animated SVG Title Graphic -->
-    <header class="hero-graphic" aria-label="‘ऑरा’">
-      <svg class="aura-svg" viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="auraRadial" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="var(--aura-stop-1)" stop-opacity="0.8" />
-            <stop offset="38%" stop-color="var(--aura-stop-2)" stop-opacity="0.5" />
-            <stop offset="72%" stop-color="var(--aura-stop-3)" stop-opacity="0.25" />
-            <stop offset="100%" stop-color="var(--aura-stop-4)" stop-opacity="0" />
-          </radialGradient>
+        <p class="center-italic title">‘ऑरा’</p>
+        
+        <p>‘ऑरा’ (Aura) हा शब्द बहुतांश वेळा आध्यात्मिक विषयांची चर्चा करताना वापरला जातो. कोणत्याही सजीव गोष्टीच्या सभोवताली त्यातून उत्सर्जित होत असलेल्या उर्जेचा एक थर असतो अशी ही संकल्पना आहे.</p>
+        
+        <p>‘ऑरा’ खरंच असतो का? दिसतो का? असेल तर सगळ्यांना का दिसत, जाणवत नाही या प्रश्नांच्या मागे न जाता आपल्या प्रत्येकाच्या अंगभूत ऊर्जेचे सभोवताली असलेले प्रभावक्षेत्र म्हणजे ‘ऑरा’ असा अर्थ घेऊया.</p>
+        
+        <p>असा हा ‘ऑरा’ दिसत नसला तरी असतो, जाणवतो हे मात्र मान्य करायला हवे. माणसामाणसांत होणाऱ्या, माणसांच्या प्राण्यांबरोबर, अगदी निर्जीव वस्तूंसोबत होणाऱ्या ‘परस्परसंवादा’मधे त्यातील ऊर्जा जाणवते हे नक्की.</p>
+        
+        <p>मतभेद असले, तावातावाने चर्चा होत असली तर परिस्थिती तप्त आहे; वात्सल्य, जिव्हाळा, प्रेम असेल तर उबदार किंवा गारेगार आहे आणि यातील दोन्हीच्या मधील स्थिती असेल तर प्रकरण नरम-गरम आहे असे म्हणले जाते. हातून एखादे काम सहज होते व भारी वाटते किंवा कधीकधी एखाद्या कामात अडचणी येतात आणि चिडचिड होते; हे सर्व दुसरे तिसरे काहीही नसते, ते ‘ऑरा’चे, जाणवणाऱ्या ऊर्जेचे केले जाणारे यथार्थ वर्णन असते.</p>
+        
+        <p>ज्ञानी, अनुभवसमृद्ध व्यक्तीच्या वागण्या-बोलण्यात एक प्रकारचा आश्वासकपणा, शांतता व आत्मविश्वासाचा ‘ऑरा’ असतो हे जाणवते. तो प्रयत्नपूर्वक बघावा-दाखवावा लागत नाही, त्याची अनुभूती येते.</p>
+        
+        <p class="center-italic title">🌠🌠🌠</p>
+        
+        <p>प्रत्येक 'मी'चा एक 'ऑरा' म्हणजे त्याची एक अंगभूत ऊर्जा असते. ती मूलतः शांत, थंड असते. त्यात बदल होतात ते विचारांमुळे. आता मन म्हणले की विचार येणार, यायलाच हवेत. प्रगती होण्यासाठी, ज्ञानात भर पडण्यासाठी, ते ताजेतवाने राहण्यासाठी, अनुभवसमृद्ध होण्यासाठी विचार हवेतच. फक्त त्याचा अतिरेक नको.</p>
+        
+        <p>काही वेळा मीच, मलाच, माझेच, माझ्यामुळेच यासारखे विचार ‘मी’ भोवती जास्तच रुंजी घालू लागतात. असे होऊ लागले की वाढीस लागतो तो अहंकार. त्याचे जाणवणे ही ‘ऑरा’ला आलेली एक प्रकारची सूज असते.</p>
+        
+        <p>याच्या उलट मला काही येत नाही, जमतच नाही यासारखे नकारात्मक विचार मनात असले तर तो ‘न्यूनगंड’ असतो. हा ‘निगेटीव्ह इगो’ शिल्लक असेल-नसेल तो ‘ऑरा’ खातो आणि त्याची जागा ‘स्ट्रेस’ने व्यापली जाते. काहीच ‘फ्रूटफूल’ करता येईनासे होते.</p>
+        
+        <p>वरच्या दोनही दंभपूर्ण ‘ऑरा’ला एक प्रकारचा चटका असतो, त्याचा त्यातील ‘मी’ ला कदाचित तात्कालिक फायदा होत असतो पण तो टिकवण्यासाठी त्या ‘मी’ ला नकळत खूप कष्ट पडत असतात, त्यात खूप ऊर्जा वाया जात असते.</p>
+        
+        <p>पण डोक्यात जेव्हां असंख्य विचारांचे थैमान असते तेव्हां त्यात असलेली निरर्थक आणि अस्थानी विचारांची बहुसंख्या ‘ऑरा’ तापवते आणि मग त्याचे उकळणे राग, संताप, उन्माद आणि अतिरेक यासारख्या क्रियांद्वारे बाहेर येते. आजूबाजूच्या व्यक्ती, वस्तूंना तर ते जाणवतेच पण ज्यातून ही ऊर्जा बाहेर पडत असते त्यालाही अक्षरशः जाळते.</p>
+        
+        <p class="center-italic title">🌠🌠🌠</p>
+        
+        <p>चांगल्या सवयी आणि मनाचिये ठायी असलेला कृतज्ञतेचा भाव मनी उद्भवणारे निरर्थक विचार कमी कमी करत निर्विचार होण्याच्या मार्ग प्रशस्त करतो. हा प्रवास ‘ऑरा’ची पातळी योग्य तितकी राखायला मदत करतो. मन स्थिर राहू लागते. पाय जमिनीवर असण्याची अर्थात वर्तमानात राहण्याची जडणारी सवय क्वचित प्रसंगी जास्त होणाऱ्या ‘ऑरा’ला ग्राउंड करून शॉर्ट सर्किट होऊ देत नाही.</p>
+        
+        <p class="date-footer">२०२५०८०४<br>🌠</p>
 
-          <linearGradient id="ringGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="var(--ring1-start)" stop-opacity="0.75" />
-            <stop offset="50%" stop-color="var(--ring1-mid)" stop-opacity="0.25" />
-            <stop offset="100%" stop-color="var(--ring1-end)" stop-opacity="0.65" />
-          </linearGradient>
+        <div class="share-btn-container">
+            <button class="share-btn" onclick="shareContent()">Share</button>
+        </div>
+    </div>
 
-          <linearGradient id="ringGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stop-color="var(--ring2-start)" stop-opacity="0.65" />
-            <stop offset="55%" stop-color="var(--ring2-mid)" stop-opacity="0.2" />
-            <stop offset="100%" stop-color="var(--ring2-end)" stop-opacity="0.65" />
-          </linearGradient>
-
-          <linearGradient id="titleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stop-color="var(--title-start)" />
-            <stop offset="50%" stop-color="var(--title-mid)" />
-            <stop offset="100%" stop-color="var(--title-end)" />
-          </linearGradient>
-
-          <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="9" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
-          </filter>
-        </defs>
-
-        <!-- Pulsing Aura Core -->
-        <circle class="aura-glow" cx="170" cy="90" r="78" fill="url(#auraRadial)" filter="url(#softGlow)" />
-
-        <!-- Orbital Rings -->
-        <ellipse class="ring-cw" cx="170" cy="90" rx="98" ry="46" fill="none" stroke="url(#ringGrad1)" stroke-width="1.8" stroke-dasharray="12 10 28 8" />
-        <ellipse class="ring-ccw" cx="170" cy="90" rx="114" ry="54" fill="none" stroke="url(#ringGrad2)" stroke-width="1.5" stroke-dasharray="16 12 4 10" />
-
-        <!-- Floating Energy Nodes -->
-        <circle class="particle-1" cx="82" cy="66" r="4" fill="var(--node-1)" />
-        <circle class="particle-2" cx="258" cy="114" r="4" fill="var(--node-2)" />
-        <circle class="particle-3" cx="248" cy="56" r="3.5" fill="var(--node-3)" />
-        <circle class="particle-1" cx="96" cy="124" r="3.5" fill="var(--node-4)" />
-
-        <!-- Title Text -->
-        <text x="170" y="104" text-anchor="middle" font-family="'IBM Plex Sans Devanagari', 'IBM Plex Sans', sans-serif" font-size="44" font-weight="700" fill="url(#titleGradient)" letter-spacing="2">‘ऑरा’</text>
-      </svg>
-    </header>
-
-    <!-- Document Content -->
-    <article class="article-body">
-      <p>‘ऑरा’ (Aura) हा शब्द बहुतांश वेळा आध्यात्मिक विषयांची चर्चा करताना वापरला जातो. कोणत्याही सजीव गोष्टीच्या सभोवताली त्यातून उत्सर्जित होत असलेल्या उर्जेचा एक थर असतो अशी ही संकल्पना आहे.</p>
-
-      <p>‘ऑरा’ खरंच असतो का? दिसतो का? असेल तर सगळ्यांना का दिसत, जाणवत नाही या प्रश्नांच्या मागे न जाता आपल्या प्रत्येकाच्या अंगभूत ऊर्जेचे सभोवताली असलेले प्रभावक्षेत्र म्हणजे ‘ऑरा’ असा अर्थ घेऊया.</p>
-
-      <p>असा हा ‘ऑरा’ दिसत नसला तरी असतो, जाणवतो हे मात्र मान्य करायला हवे. माणसामाणसांत होणाऱ्या, माणसांच्या प्राण्यांबरोबर, अगदी निर्जीव वस्तूंसोबत होणाऱ्या ‘परस्परसंवादा’मधे त्यातील ऊर्जा जाणवते हे नक्की.</p>
-
-      <p>मतभेद असले, तावातावाने चर्चा होत असली तर परिस्थिती तप्त आहे; वात्सल्य, जिव्हाळा, प्रेम असेल तर उबदार किंवा गारेगार आहे आणि यातील दोन्हीच्या मधील स्थिती असेल तर प्रकरण नरम-गरम आहे असे म्हणले जाते. हातून एखादे काम सहज होते व भारी वाटते किंवा कधीकधी एखाद्या कामात अडचणी येतात आणि चिडचिड होते; हे सर्व दुसरे तिसरे काहीही नसते, ते ‘ऑरा’चे, जाणवणाऱ्या ऊर्जेचे केले जाणारे यथार्थ वर्णन असते.</p>
-
-      <p>ज्ञानी, अनुभवसमृद्ध व्यक्तीच्या वागण्या-बोलण्यात एक प्रकारचा आश्वासकपणा, शांतता व आत्मविश्वासाचा ‘ऑरा’ असतो हे जाणवते. तो प्रयत्नपूर्वक बघावा-दाखवावा लागत नाही, त्याची अनुभूती येते.</p>
-
-      <p class="divider-symbol">🌠🌠🌠</p>
-
-      <p>प्रत्येक 'मी'चा एक 'ऑरा' म्हणजे त्याची एक अंगभूत ऊर्जा असते. ती मूलतः शांत, थंड असते. त्यात बदल होतात ते विचारांमुळे. आता मन म्हणले की विचार येणार, यायलाच हवेत. प्रगती होण्यासाठी, ज्ञानात भर पडण्यासाठी, ते ताजेतवाने राहण्यासाठी, अनुभवसमृद्ध होण्यासाठी विचार हवेतच. फक्त त्याचा अतिरेक नको.</p>
-
-      <p>काही वेळा मीच, मलाच, माझेच, माझ्यामुळेच यासारखे विचार ‘मी’ भोवती जास्तच रुंजी घालू लागतात. असे होऊ लागले की वाढीस लागतो तो अहंकार. त्याचे जाणवणे ही ‘ऑरा’ला आलेली एक प्रकारची सूज असते.</p>
-
-      <p>याच्या उलट मला काही येत नाही, जमतच नाही यासारखे नकारात्मक विचार मनात असले तर तो ‘न्यूनगंड’ असतो. हा ‘निगेटीव्ह इगो’ शिल्लक असेल-नसेल तो ‘ऑरा’ खातो आणि त्याची जागा ‘स्ट्रेस’ने व्यापली जाते. काहीच ‘फ्रूटफूल’ करता येईनासे होते.</p>
-
-      <p>वरच्या दोनही दंभपूर्ण ‘ऑरा’ला एक प्रकारचा चटका असतो, त्याचा त्यातील ‘मी’ ला कदाचित तात्कालिक फायदा होत असतो पण तो टिकवण्यासाठी त्या ‘मी’ ला नकळत खूप कष्ट पडत असतात, त्यात खूप ऊर्जा वाया जात असते.</p>
-
-      <p>पण डोक्यात जेव्हां असंख्य विचारांचे थैमान असते तेव्हां त्यात असलेली निरर्थक आणि अस्थानी विचारांची बहुसंख्या ‘ऑरा’ तापवते आणि मग त्याचे उकळणे राग, संताप, उन्माद आणि अतिरेक यासारख्या क्रियांद्वारे बाहेर येते. आजूबाजूच्या व्यक्ती, वस्तूंना तर ते जाणवतेच पण ज्यातून ही ऊर्जा बाहेर पडत असते त्यालाही अक्षरशः जाळते.</p>
-
-      <p class="divider-symbol">🌠🌠🌠</p>
-
-      <p>चांगल्या सवयी आणि मनाचिये ठायी असलेला कृतज्ञतेचा भाव मनी उद्भवणारे निरर्थक विचार कमी कमी करत निर्विचार होण्याच्या मार्ग प्रशस्त करतो. हा प्रवास ‘ऑरा’ची पातळी योग्य तितकी राखायला मदत करतो. मन स्थिर राहू लागते. पाय जमिनीवर असण्याची अर्थात वर्तमानात राहण्याची जडणारी सवय क्वचित प्रसंगी जास्त होणाऱ्या ‘ऑरा’ला ग्राउंड करून शॉर्ट सर्किट होऊ देत नाही.</p>
-
-      <p class="date-stamp">२०२५०८०४🌠</p>
-    </article>
-
-    <!-- Share Button (Samsung Internet Compatible) -->
-    <footer class="share-wrapper">
-      <button class="share-btn" id="shareBtn" type="button" aria-label="Share article">
-        <span class="share-btn-content">
-          <svg class="share-btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="18" cy="5" r="3"></circle>
-            <circle cx="6" cy="12" r="3"></circle>
-            <circle cx="18" cy="19" r="3"></circle>
-            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-          </svg>
-          <span class="share-btn-label">Share</span>
-        </span>
-      </button>
-    </footer>
-
-  </main>
-
-  <!-- Notification Toast -->
-  <aside class="toast" id="toastNotification" role="status" aria-live="polite">Link Copied</aside>
-
-  <script>
-    // Theme Switcher
-    const themeBtn = document.getElementById('themeToggleBtn');
-    const themeIcon = document.getElementById('themeIcon');
-    const themeLabel = document.getElementById('themeLabel');
-    const root = document.documentElement;
-
-    function applyTheme(isDark) {
-      if (isDark) {
-        root.setAttribute('data-theme', 'dark');
-        themeIcon.textContent = '☀️';
-        themeLabel.textContent = 'Light';
-      } else {
-        root.removeAttribute('data-theme');
-        themeIcon.textContent = '🌙';
-        themeLabel.textContent = 'Dark';
-      }
-    }
-
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    let currentDark = prefersDark;
-    applyTheme(currentDark);
-
-    themeBtn.addEventListener('click', () => {
-      currentDark = !currentDark;
-      applyTheme(currentDark);
-    });
-
-    // Share Trigger with Samsung Internet Fallbacks
-    const shareBtn = document.getElementById('shareBtn');
-    const toast = document.getElementById('toastNotification');
-
-    function showToast(msg) {
-      toast.textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2600);
-    }
-
-    function copyToClipboard(text) {
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(() => {
-          showToast('Link copied to clipboard!');
-        }).catch(() => {
-          fallbackInputCopy(text);
-        });
-      } else {
-        fallbackInputCopy(text);
-      }
-    }
-
-    function fallbackInputCopy(text) {
-      const input = document.createElement('input');
-      input.setAttribute('value', text);
-      input.style.position = 'fixed';
-      input.style.top = '0';
-      input.style.left = '0';
-      input.style.opacity = '0.01';
-      document.body.appendChild(input);
-      input.focus();
-      input.select();
-      try {
-        document.execCommand('copy');
-        showToast('Link copied to clipboard!');
-      } catch (e) {
-        showToast('Share failed. Please copy URL manually.');
-      }
-      document.body.removeChild(input);
-    }
-
-    shareBtn.addEventListener('click', async () => {
-      const shareData = {
-        title: '‘ऑरा’',
-        text: '‘ऑरा’ (Aura) - आपल्या प्रत्येकाच्या अंगभूत ऊर्जेचे सभोवताली असलेले प्रभावक्षेत्र',
-        url: window.location.href
-      };
-
-      if (navigator.share) {
-        try {
-          await navigator.share(shareData);
-        } catch (err) {
-          if (err.name !== 'AbortError') {
-            copyToClipboard(window.location.href);
-          }
+    <script>
+        function shareContent() {
+            if (navigator.share) {
+                navigator.share({
+                    title: "‘ऑरा’",
+                    text: "‘ऑरा’ - अंगभूत ऊर्जेचे प्रभावक्षेत्र",
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                alert("Sharing is not supported on this browser.");
+            }
         }
-      } else {
-        copyToClipboard(window.location.href);
-      }
-    });
-  </script>
+    </script>
 </body>
 </html>
