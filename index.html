@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
   <title>‘ऑरा’</title>
   
   <!-- IBM Plex Sans & IBM Plex Sans Devanagari Fonts -->
@@ -15,17 +16,17 @@
     :root {
       color-scheme: light;
       --bg-color: #faf7f2;
-      --card-bg: rgba(255, 255, 255, 0.9);
-      --card-border: rgba(220, 210, 195, 0.6);
+      --card-bg: #ffffff;
+      --card-border: #e0d7cb;
       --text-color: #2b2520;
       --text-muted: #5e544c;
-      --button-bg: #2b2520;
-      --button-text: #faf7f2;
-      --button-hover: #443c34;
-      --button-border: transparent;
+      --btn-bg: #2b2520;
+      --btn-text: #faf7f2;
+      --btn-hover: #443c34;
+      --btn-border: #2b2520;
       --shadow: 0 16px 40px -10px rgba(160, 120, 85, 0.15);
-      --theme-btn-bg: rgba(255, 255, 255, 0.9);
-      --theme-btn-border: rgba(0, 0, 0, 0.12);
+      --theme-btn-bg: #ffffff;
+      --theme-btn-border: #d0c8be;
       --toast-bg: #2b2520;
       --toast-text: #ffffff;
 
@@ -53,17 +54,17 @@
     [data-theme="dark"] {
       color-scheme: dark;
       --bg-color: #121316;
-      --card-bg: rgba(24, 26, 32, 0.92);
-      --card-border: rgba(255, 255, 255, 0.1);
+      --card-bg: #191b22;
+      --card-border: #2d313d;
       --text-color: #ede8e1;
       --text-muted: #b0a99f;
-      --button-bg: #ede8e1;
-      --button-text: #121316;
-      --button-hover: #ffffff;
-      --button-border: rgba(255, 255, 255, 0.2);
+      --btn-bg: #f3efe8;
+      --btn-text: #121316;
+      --btn-hover: #ffffff;
+      --btn-border: #f3efe8;
       --shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.5);
-      --theme-btn-bg: rgba(30, 33, 40, 0.95);
-      --theme-btn-border: rgba(255, 255, 255, 0.15);
+      --theme-btn-bg: #20242e;
+      --theme-btn-border: #353b49;
       --toast-bg: #ffffff;
       --toast-text: #121316;
 
@@ -121,7 +122,6 @@
 
     .theme-toggle-btn {
       -webkit-appearance: none;
-      -moz-appearance: none;
       appearance: none;
       background: var(--theme-btn-bg);
       border: 1px solid var(--theme-btn-border);
@@ -131,17 +131,11 @@
       border-radius: 9999px;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
       gap: 0.5rem;
       font-size: 0.95rem;
       font-family: inherit;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       transition: all 0.25s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .theme-toggle-btn:hover {
-      transform: translateY(-1px);
     }
 
     .article-container {
@@ -152,8 +146,6 @@
       border-radius: 24px;
       padding: 3rem 2.8rem;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
     }
 
@@ -167,7 +159,7 @@
       }
     }
 
-    /* Animated Aura Graphic */
+    /* Animated SVG Title Graphic */
     .hero-graphic {
       display: flex;
       justify-content: center;
@@ -227,74 +219,86 @@
       color: var(--text-muted);
     }
 
-    /* Share Section with Samsung Internet Compatibility Fixes */
+    /* -------------------------------------------------------------
+       SAMSUNG INTERNET BULLETPROOF SHARE BUTTON STYLES
+       ------------------------------------------------------------- */
     .share-wrapper {
       margin-top: 3.2rem;
       width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      display: block;
+      text-align: center;
     }
 
+    /* Block level styling to circumvent Samsung WebKit inline-flex height collapse */
     .share-btn {
-      /* Reset vendor styles that Samsung Internet forces on buttons */
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-      outline: none;
-      margin: 0;
-
-      /* Visual & Layout Properties */
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      vertical-align: middle;
-      gap: 0.65rem;
-      background-color: var(--button-bg);
-      color: var(--button-text);
-      border: 1px solid var(--button-border);
-      border-radius: 9999px;
-      padding: 0.85rem 2.2rem;
-      min-height: 48px;
-      font-family: inherit;
-      font-size: 1.05rem;
-      font-weight: 500;
-      line-height: 1.2;
-      text-decoration: none;
-      white-space: nowrap;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+      box-sizing: border-box !important;
+      
+      display: inline-block !important;
+      min-width: 170px !important;
+      height: 52px !important;
+      padding: 0 1.8rem !important;
+      
+      background-color: var(--btn-bg) !important;
+      color: var(--btn-text) !important;
+      border: 2px solid var(--btn-border) !important;
+      border-radius: 9999px !important;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+      
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-      transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      vertical-align: middle;
+      transition: background-color 0.25s, transform 0.2s, box-shadow 0.25s;
     }
 
     .share-btn:hover {
-      background-color: var(--button-hover);
+      background-color: var(--btn-hover) !important;
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2) !important;
     }
 
     .share-btn:active {
       transform: translateY(0);
     }
 
-    /* Explicit SVG constraints to prevent collapse in WebKit / Samsung Internet */
+    /* Table-cell inner container keeps text and SVG perfectly aligned across all mobile engines */
+    .share-btn-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      gap: 10px;
+    }
+
     .share-btn-icon {
-      width: 20px;
-      height: 20px;
-      min-width: 20px;
-      min-height: 20px;
-      display: inline-block;
-      flex-shrink: 0;
-      stroke: currentColor;
-      pointer-events: none;
+      display: inline-block !important;
+      width: 20px !important;
+      height: 20px !important;
+      min-width: 20px !important;
+      min-height: 20px !important;
+      stroke: var(--btn-text) !important;
+      color: var(--btn-text) !important;
+      fill: none !important;
+      stroke-width: 2.2 !important;
+      stroke-linecap: round !important;
+      stroke-linejoin: round !important;
+      vertical-align: middle !important;
+      flex-shrink: 0 !important;
     }
 
     .share-btn-label {
-      display: inline-block;
-      line-height: 1;
-      pointer-events: none;
+      display: inline-block !important;
+      font-family: "IBM Plex Sans Devanagari", "IBM Plex Sans", sans-serif !important;
+      font-size: 1.1rem !important;
+      font-weight: 600 !important;
+      color: var(--btn-text) !important;
+      line-height: 1 !important;
+      vertical-align: middle !important;
+      letter-spacing: 0.02em;
     }
 
     /* Feedback Toast */
@@ -469,20 +473,22 @@
 
       <p>चांगल्या सवयी आणि मनाचिये ठायी असलेला कृतज्ञतेचा भाव मनी उद्भवणारे निरर्थक विचार कमी कमी करत निर्विचार होण्याच्या मार्ग प्रशस्त करतो. हा प्रवास ‘ऑरा’ची पातळी योग्य तितकी राखायला मदत करतो. मन स्थिर राहू लागते. पाय जमिनीवर असण्याची अर्थात वर्तमानात राहण्याची जडणारी सवय क्वचित प्रसंगी जास्त होणाऱ्या ‘ऑरा’ला ग्राउंड करून शॉर्ट सर्किट होऊ देत नाही.</p>
 
-      <p class="date-stamp">🌠 २०२५०८०४ 🌠</p>
+      <p class="date-stamp">२०२५०८०४🌠</p>
     </article>
 
-    <!-- Share Button (Optimized for Samsung Internet & Mobile WebKit) -->
+    <!-- Share Button (Samsung Internet Compatible) -->
     <footer class="share-wrapper">
-      <button class="share-btn" id="shareBtn" type="button" aria-label="Share this article">
-        <svg class="share-btn-icon" viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="18" cy="5" r="3"></circle>
-          <circle cx="6" cy="12" r="3"></circle>
-          <circle cx="18" cy="19" r="3"></circle>
-          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-        </svg>
-        <span class="share-btn-label">Share</span>
+      <button class="share-btn" id="shareBtn" type="button" aria-label="Share article">
+        <span class="share-btn-content">
+          <svg class="share-btn-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+          <span class="share-btn-label">Share</span>
+        </span>
       </button>
     </footer>
 
@@ -519,7 +525,7 @@
       applyTheme(currentDark);
     });
 
-    // Share Trigger with Samsung Internet & Mobile Browser Fallbacks
+    // Share Trigger with Samsung Internet Fallbacks
     const shareBtn = document.getElementById('shareBtn');
     const toast = document.getElementById('toastNotification');
 
@@ -536,25 +542,28 @@
         navigator.clipboard.writeText(text).then(() => {
           showToast('Link copied to clipboard!');
         }).catch(() => {
-          execCopyFallback(text);
+          fallbackInputCopy(text);
         });
       } else {
-        execCopyFallback(text);
+        fallbackInputCopy(text);
       }
     }
 
-    function execCopyFallback(text) {
+    function fallbackInputCopy(text) {
       const input = document.createElement('input');
       input.setAttribute('value', text);
       input.style.position = 'fixed';
-      input.style.opacity = '0';
+      input.style.top = '0';
+      input.style.left = '0';
+      input.style.opacity = '0.01';
       document.body.appendChild(input);
+      input.focus();
       input.select();
       try {
         document.execCommand('copy');
         showToast('Link copied to clipboard!');
       } catch (e) {
-        showToast('Share failed. Please copy the URL.');
+        showToast('Share failed. Please copy URL manually.');
       }
       document.body.removeChild(input);
     }
@@ -566,7 +575,7 @@
         url: window.location.href
       };
 
-      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      if (navigator.share) {
         try {
           await navigator.share(shareData);
         } catch (err) {
