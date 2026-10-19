@@ -18,8 +18,20 @@
             --svg-accent-3: #ffe4e1;
         }
 
+        /* Explicit Dark Theme */
+        html[data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --button-bg: #333333;
+            --button-text: #e0e0e0;
+            --svg-accent-1: #b04961;
+            --svg-accent-2: #3f7b9f;
+            --svg-accent-3: #ad7e85;
+        }
+
+        /* System Preference Dark Theme (if no explicit theme is set) */
         @media (prefers-color-scheme: dark) {
-            :root {
+            html:not([data-theme="light"]) {
                 --bg-color: #1a1a1a;
                 --text-color: #e0e0e0;
                 --button-bg: #333333;
@@ -44,17 +56,48 @@
             line-height: 1.9;
             margin: 0;
             padding: 5vw;
+            padding-top: 4rem; /* Added padding to prevent overlap with top buttons */
             transition: background-color 0.3s, color 0.3s;
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
         }
 
         @media (min-width: 768px) {
             body {
                 font-size: 1.25rem;
                 padding: 3vw 15vw;
+                padding-top: 4rem;
             }
+        }
+
+        .top-controls {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 100;
+        }
+
+        .control-btn {
+            background-color: var(--button-bg);
+            color: var(--button-text);
+            border: 1px solid var(--text-color);
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-family: inherit;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: opacity 0.3s, background-color 0.3s, color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            opacity: 0.8;
         }
 
         .container {
@@ -106,29 +149,6 @@
         .layer2 { animation: pulse 5s infinite alternate-reverse; }
         .layer3 { animation: pulse 6s infinite alternate; }
 
-        .share-btn-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 3rem;
-            margin-bottom: 2rem;
-        }
-
-        .share-btn {
-            background-color: var(--button-bg);
-            color: var(--button-text);
-            border: 1px solid var(--text-color);
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-family: inherit;
-            cursor: pointer;
-            border-radius: 25px;
-            transition: opacity 0.3s;
-        }
-
-        .share-btn:hover {
-            opacity: 0.8;
-        }
-
         .date-footer {
             margin-top: 2.7rem; 
             font-size: 0.85rem;
@@ -139,6 +159,12 @@
     </style>
 </head>
 <body>
+
+    <!-- Top Right Controls -->
+    <div class="top-controls">
+        <button class="control-btn" onclick="toggleTheme()" title="Toggle Theme">🌓 Theme</button>
+        <button class="control-btn" onclick="shareContent()" title="Share">↗ Share</button>
+    </div>
 
     <div class="container">
         
@@ -192,11 +218,8 @@
         
         <p>चांगल्या सवयी आणि मनाचिये ठायी असलेला कृतज्ञतेचा भाव मनी उद्भवणारे निरर्थक विचार कमी कमी करत निर्विचार होण्याच्या मार्ग प्रशस्त करतो. हा प्रवास ‘ऑरा’ची पातळी योग्य तितकी राखायला मदत करतो. मन स्थिर राहू लागते. पाय जमिनीवर असण्याची अर्थात वर्तमानात राहण्याची जडणारी सवय क्वचित प्रसंगी जास्त होणाऱ्या ‘ऑरा’ला ग्राउंड करून शॉर्ट सर्किट होऊ देत नाही.</p>
         
+        <br>
         <p class="date-footer">२०२५०८०४<br>🌠</p>
-
-        <div class="share-btn-container">
-            <button class="share-btn" onclick="shareContent()">Share</button>
-        </div>
     </div>
 
     <script>
@@ -209,6 +232,21 @@
                 }).catch(console.error);
             } else {
                 alert("Sharing is not supported on this browser.");
+            }
+        }
+
+        function toggleTheme() {
+            const root = document.documentElement;
+            const currentTheme = root.getAttribute('data-theme');
+            
+            if (currentTheme === 'dark') {
+                root.setAttribute('data-theme', 'light');
+            } else if (currentTheme === 'light') {
+                root.setAttribute('data-theme', 'dark');
+            } else {
+                // If no theme is explicitly set, calculate based on system preference
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                root.setAttribute('data-theme', prefersDark ? 'light' : 'dark');
             }
         }
     </script>
